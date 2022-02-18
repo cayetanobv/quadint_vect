@@ -16,16 +16,15 @@ def quadint_from_ZXY(zoom, X, Y):
     if zoom < 0 or zoom > MAX_ZOOM:
         raise Exception('Wrong zoom')
 
-    # quadint = Y
-    # quadint = quadint << zoom
-    # quadint = quadint | X
-    # quadint = quadint << 5
-    # quadint = quadint | zoom
-    #
-    # return quadint
+    quadint = Y
+    quadint = quadint << zoom
+    quadint = quadint | X
+    quadint = quadint << 5
+    quadint = quadint | zoom
 
-    # (z & 0x1F) | (x << 5) | (y << (z + 5))
-    return (zoom & 0x1F) | (X << 5) | (Y << (zoom + 5))
+    return quadint
+
+    # return (zoom & MAX_ZOOM) | (X << 5) | (Y << (zoom + 5))
 
 
 def point_to_tile_fraction(lons, lats, zoom):
