@@ -17,6 +17,14 @@ MAX_LATITUDE = 85.05112877980659  # (2*atan(exp(M_PI))*180.0/M_PI - 90.0)
 MIN_LONGITUDE = -MAX_LONGITUDE
 MIN_LATITUDE = -MAX_LATITUDE
 
+WEBMERCATOR_R = 6378137.0
+
+XY_SCALE = 2147483648.0  # (double)((uint32)1 << MAX_ZOOM)
+INV_XY_SCALE = (1.0 / XY_SCALE)
+WM_RANGE = (2.0 * np.pi * WEBMERCATOR_R)
+INV_WM_RANGE = (1.0 / WM_RANGE)
+WM_MAX = (np.pi * WEBMERCATOR_R)
+
 
 def xy2quadint(x, y):
     x = (x | (x << S[4])) & B[4]
@@ -58,3 +66,10 @@ def lonlat2xy(lons, lats, zoom):
 def lonlat2quadint(lons, lats, zoom):
     x, y = lonlat2xy(lons, lats, zoom)
     return xy2quadint(x, y)
+
+
+def webmercator2xy(wm_x, wm_y):
+    x = (wm_x * INV_WM_RANGE + 0.5) * XY_SCALE
+    y = (0.5 - wm_y * INV_WM_RANGE) * XY_SCALE
+
+    return x, y
