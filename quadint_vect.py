@@ -73,3 +73,12 @@ def webmercator2xy(wm_x, wm_y):
     y = (0.5 - wm_y * INV_WM_RANGE) * XY_SCALE
 
     return x, y
+
+
+def webmercatorzoom2xy(wm_x, wm_y, zoom):
+    XY_SCALE = 1 << zoom
+
+    x = (wm_x * INV_WM_RANGE + 0.5) * XY_SCALE
+    y = (0.5 - wm_y * INV_WM_RANGE) * XY_SCALE
+
+    return x, y
