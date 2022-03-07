@@ -68,17 +68,10 @@ def lonlat2quadint(lons, lats, zoom):
     return xy2quadint(x, y)
 
 
-def webmercator2xy(wm_x, wm_y):
-    x = (wm_x * INV_WM_RANGE + 0.5) * XY_SCALE
-    y = (0.5 - wm_y * INV_WM_RANGE) * XY_SCALE
+def webmercator2xy(wm_x, wm_y, zoom=None):
+    xy_scale = 1 << zoom if zoom else XY_SCALE
 
-    return x, y
-
-
-def webmercatorzoom2xy(wm_x, wm_y, zoom):
-    XY_SCALE = 1 << zoom
-
-    x = (wm_x * INV_WM_RANGE + 0.5) * XY_SCALE
-    y = (0.5 - wm_y * INV_WM_RANGE) * XY_SCALE
+    x = (wm_x * INV_WM_RANGE + 0.5) * xy_scale
+    y = (0.5 - wm_y * INV_WM_RANGE) * xy_scale
 
     return x, y
